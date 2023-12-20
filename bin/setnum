@@ -5,9 +5,9 @@ echo $2
 n=$(( ${1: -1}*4+3 ))
 
 [ -e /dev/ttyUSB$n ] || { echo "Modem not found!"; exit 1; }
-sms_tool -d /dev/ttyUSB$n at ATI > nul
+sms_tool -d /dev/ttyUSB$n at ATI > /dev/null
 sms_tool -d /dev/ttyUSB$n at AT+CPIN? | grep -q "READY" || { echo "SIM not found!"; exit 1; }
-sms_tool -d /dev/ttyUSB$n at at+cpbs=? | grep -q ON || sms_tool -d /dev/ttyUSB$n at AT\$QCPBMPREF=1 >nul
-sms_tool -d /dev/ttyUSB$n at at+cpbs=\"ON\" >nul
-sms_tool -d /dev/ttyUSB$n at at+cpbw=1,\"$2\" >nul
+sms_tool -d /dev/ttyUSB$n at at+cpbs=? | grep -q ON || sms_tool -d /dev/ttyUSB$n at AT\$QCPBMPREF=1 > /dev/null
+sms_tool -d /dev/ttyUSB$n at at+cpbs=\"ON\" > /dev/null
+sms_tool -d /dev/ttyUSB$n at at+cpbw=1,\"$2\" > /dev/null
 sms_tool -d /dev/ttyUSB$n at at+cpbr=1 | grep -q "$2" && echo Ok
